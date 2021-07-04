@@ -1,23 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState} from "react";
+const PDF_Renderer = React.lazy(() => import("./pdf-renderer"));
 
 function App() {
+  let [showPDF, setShowPDF] = useState(false);
+  const showPDFOnClick = () => {
+    setShowPDF(true);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button style={{display: "block"}} onClick={showPDFOnClick}>Show PDF</button>
+      <React.Suspense fallback = {<div>Loadding....</div>}>
+      {showPDF && <PDF_Renderer/>}
+      </React.Suspense>
     </div>
   );
 }
